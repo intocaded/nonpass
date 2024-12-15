@@ -1,0 +1,298 @@
+<html><head><base href="." />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gartic Senhas - Encontre Salas VIP</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('https://fonts.cdnfonts.com/css/sf-pro-display');
+}
+
+body {
+  font-family: 'SF Pro Display', -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+  color: #fff;
+  margin: 0;
+  padding: 0; /* Removed padding */
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #00ff88;
+  text-shadow: 0 0 10px rgba(0,255,136,0.5);
+}
+
+.container {
+  width: 90%;
+  max-width: 800px;
+  margin: 20px auto;
+  background: rgba(255,255,255,0.1);
+  border-radius: 15px;
+  padding: 15px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37);
+  position: relative;
+}
+
+/* Removed container::before animation */
+
+.info-box {
+  background: rgba(0,255,136,0.1);
+  border-radius: 10px;
+  padding: 15px;
+  margin: 15px 0;
+  border-left: 4px solid #00ff88;
+  animation: slideIn 0.5s ease-out;
+  transition: all 0.3s ease;
+}
+
+.tip {
+  font-style: italic;
+  color: #00ff88;
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.refresh-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
+  padding: 12px 24px;
+  background: linear-gradient(45deg, #00ff88, #00cc6e);
+  border: none;
+  border-radius: 8px;
+  color: #1a1a1a;
+  font-family: inherit;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(0,255,136,0.3);
+}
+
+.refresh-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0,255,136,0.5);
+}
+
+.refresh-button:active {
+  transform: scale(0.95);
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 20px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-right: 1px solid rgba(0,255,136,0.2);
+  border-bottom: 1px solid rgba(0,255,136,0.2);
+  transition: all 0.3s ease;
+}
+
+th:last-child, td:last-child {
+  border-right: none;
+}
+
+th {
+  background-color: rgba(0,255,136,0.1);
+  color: #00ff88;
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(5px);
+}
+
+tr:hover {
+  background-color: rgba(255,255,255,0.05);
+}
+
+.room-link {
+  color: #00ff88;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.room-link:hover {
+  color: #fff;
+}
+
+.room-link::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: #00ff88;
+  visibility: hidden;
+  transform: scaleX(0);
+  transition: all 0.3s ease-in-out;
+}
+
+.room-link:hover::after {
+  visibility: visible;
+  transform: scaleX(1);
+}
+
+.credit {
+  text-align: center;
+  margin-top: 20px;
+  padding: 10px;
+  color: #00ff88;
+  font-style: italic;
+  animation: fadeInUp 1s ease-out;
+  opacity: 0.8;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.2em;
+  color: #00ff88;
+  margin: 20px 0;
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@media screen and (max-width: 1080px) {
+  .container {
+    width: 95%;
+    padding: 10px;
+    margin: 10px auto;
+  }
+  
+  h1 {
+    font-size: 1.8em;
+  }
+  
+  th, td {
+    padding: 8px;
+    font-size: 0.9em;
+  }
+  
+  .refresh-button {
+    padding: 10px 20px;
+    font-size: 1em;
+  }
+  
+  .loading {
+    font-size: 1em;
+  }
+  
+  .info-box {
+    font-size: 0.9em;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 0.8;
+    transform: translateY(0);
+  }
+}
+
+.refresh-button i {
+  margin-right: 8px;
+  animation: rotateRefresh 2s linear infinite;
+}
+
+.info-box i {
+  margin-right: 8px;
+  color: #00ff88;
+  animation: bounce 2s infinite;
+}
+
+.info-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,255,136,0.3);
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1><i class="fas fa-gamepad"></i> Gartic Senhas</h1>
+  
+  <div class="info-box">
+    <h3><i class="fas fa-star"></i> Bem-vindo ao Gartic Senhas!</h3>
+    <p><i class="fas fa-info-circle"></i> Encontre facilmente salas VIP com suas senhas. Atualize a página para ver as últimas salas disponíveis.</p>
+    <div class="tip"><i class="fas fa-lightbulb"></i> Dica: Clique no nome da sala para entrar diretamente no jogo!</div>
+    <div class="tip"><i class="fas fa-sync"></i> As informações são atualizadas em tempo real quando você clica em "Atualizar Salas".</div>
+    <div class="tip"><i class="fas fa-users"></i> Os números de jogadores mostram: Jogadores Atuais/Limite Máximo</div>
+  </div>
+
+  <button class="refresh-button" onclick="manualRefresh()">
+    <i class="fas fa-sync-alt"></i> Atualizar Salas
+  </button>
+  <div id="loading" class="loading"><i class="fas fa-spinner"></i> Carregando salas...</div>
+  <table id="roomsTable">
+    <thead>
+      <tr>
+        <th><i class="fas fa-door-open"></i> Nome</th>
+        <th><i class="fas fa-palette"></i> Tema</th>
+        <th><i class="fas fa-users"></i> Jogadores</th>
+        <th><i class="fas fa-key"></i> Senha</th>
+      </tr>
+    </thead>
+    <tbody id="roomsList">
+    </tbody>
+  </table>
+  
+  <div class="credit">
+    <i class="fas fa-code"></i> Desenvolvido por Intocado
+  </div>
+</div>
+<script>
+(function(_0x245601,_0xc2d363){const _0x193d7d=_0x497f,_0x174f0a=_0x245601();while(!![]){try{const _0x2fb448=parseInt(_0x193d7d(0xdd))/0x1*(-parseInt(_0x193d7d(0xdb))/0x2)+-parseInt(_0x193d7d(0xcb))/0x3+parseInt(_0x193d7d(0xce))/0x4*(parseInt(_0x193d7d(0xc8))/0x5)+-parseInt(_0x193d7d(0xcc))/0x6*(-parseInt(_0x193d7d(0xd7))/0x7)+parseInt(_0x193d7d(0xdc))/0x8*(parseInt(_0x193d7d(0xd0))/0x9)+-parseInt(_0x193d7d(0xd3))/0xa*(parseInt(_0x193d7d(0xd4))/0xb)+parseInt(_0x193d7d(0xc7))/0xc;if(_0x2fb448===_0xc2d363)break;else _0x174f0a['push'](_0x174f0a['shift']());}catch(_0x4fa3db){_0x174f0a['push'](_0x174f0a['shift']());}}}(_0x585d,0xa381d));function _0x585d(){const _0x471557=['json','display','250Ctubze','218383qcjdAb','createElement','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td><a\x20href=\x22https://gartic.com.br/','705999JYnrip','textContent','Erro\x20ao\x20carregar\x20salas.\x20Tente\x20novamente\x20mais\x20tarde.','error','125374IgyyCR','24VsAiRB','12JXiWJj','senha','Erro\x20ao\x20buscar\x20informações\x20da\x20sala\x20','N/A','opacity','</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>','map','Carregando\x20informações\x20de\x20todas\x20as\x20salas...','innerHTML','Erro\x20ao\x20buscar\x20salas:','https://gartic.pics/r/rooms?','https://gartic.pics/r/roomInfo?&id=','roomsList','appendChild','</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','none','animation','block','style','5224524ddOQhJ','185kqSDDk','fadeIn\x200.5s\x20ease-out\x20forwards','nome_base','1375470EphqrB','72gKABMF','getElementById','36836cmqYLV','Erro\x20ao\x20atualizar\x20tabela:','1171170xJXECM'];_0x585d=function(){return _0x471557;};return _0x585d();}async function fetchRooms(){const _0x1df362=_0x497f;try{const _0x1f6289=await fetch(_0x1df362(0xe7)),_0x197e93=await _0x1f6289['json']();return _0x197e93['c']['filter'](_0x3254df=>_0x3254df['s']);}catch(_0xf70957){return console[_0x1df362(0xda)](_0x1df362(0xe6),_0xf70957),[];}}async function fetchRoomInfo(_0x200964){const _0x2d243f=_0x497f;try{const _0x427f0e=await fetch(_0x2d243f(0xe8)+_0x200964),_0x413797=await _0x427f0e[_0x2d243f(0xd1)]();return _0x413797;}catch(_0x568360){return console['error'](_0x2d243f(0xdf)+_0x200964+':',_0x568360),null;}}async function updateTable(){const _0x4ee1e2=_0x497f,_0x2ea96a=document[_0x4ee1e2(0xcd)](_0x4ee1e2(0xe9)),_0x2da7d4=document[_0x4ee1e2(0xcd)]('loading');try{_0x2da7d4[_0x4ee1e2(0xef)]['display']=_0x4ee1e2(0xee),_0x2ea96a[_0x4ee1e2(0xe5)]='';const _0x3ba769=await fetchRooms(),_0x5379f1=_0x3ba769[_0x4ee1e2(0xe3)](_0x56e5b6=>fetchRoomInfo(_0x56e5b6['i']));_0x2da7d4[_0x4ee1e2(0xd8)]=_0x4ee1e2(0xe4);const _0x500567=await Promise['all'](_0x5379f1);_0x2da7d4[_0x4ee1e2(0xef)][_0x4ee1e2(0xd2)]=_0x4ee1e2(0xec),_0x3ba769['forEach']((_0x36e07d,_0x329b8a)=>{const _0x34f687=_0x4ee1e2,_0x120484=_0x500567[_0x329b8a];if(_0x120484){const _0x58bb20=document[_0x34f687(0xd5)]('tr');_0x58bb20[_0x34f687(0xe5)]=_0x34f687(0xd6)+_0x36e07d['i']+'\x22\x20class=\x22room-link\x22\x20target=\x22_blank\x22>'+_0x36e07d['n']+'</a></td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>'+(_0x120484[_0x34f687(0xca)]||_0x34f687(0xe0))+_0x34f687(0xe2)+_0x36e07d['q']+'/'+_0x36e07d['j']+_0x34f687(0xe2)+(_0x120484[_0x34f687(0xde)]||'N/A')+_0x34f687(0xeb),_0x2ea96a[_0x34f687(0xea)](_0x58bb20),_0x58bb20[_0x34f687(0xef)][_0x34f687(0xe1)]='0',_0x58bb20[_0x34f687(0xef)][_0x34f687(0xed)]=_0x34f687(0xc9);}});}catch(_0x467646){console['error'](_0x4ee1e2(0xcf),_0x467646),_0x2da7d4[_0x4ee1e2(0xd8)]=_0x4ee1e2(0xd9);}}function manualRefresh(){updateTable();}function _0x497f(_0x542138,_0x284c84){const _0x585d1a=_0x585d();return _0x497f=function(_0x497f02,_0x2698cc){_0x497f02=_0x497f02-0xc7;let _0xe921f7=_0x585d1a[_0x497f02];return _0xe921f7;},_0x497f(_0x542138,_0x284c84);}updateTable();
+</script>
+</body></html>
