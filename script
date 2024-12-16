@@ -8,7 +8,7 @@ from datetime import datetime
 import base64
 
 def verificar_validade():
-    data_codificada = "MjAyNDEyMjA="  # Data codificada em Base64 (20/12/2024)
+    data_codificada = "MjAyNDEyMjA="  
     data_limite = int(base64.b64decode(data_codificada).decode("utf-8"))
     data_atual = int(datetime.now().strftime("%Y%m%d"))
     if data_atual > data_limite:
